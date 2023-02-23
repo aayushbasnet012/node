@@ -1,4 +1,5 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -27,7 +28,22 @@ const AdminLoginPage = () => {
 
   const onSubmit = async (data) => {
     let sdk = new MkdSDK();
-    //TODO
+    fetch("https://reacttask.mkdlabs.com/v2/api/lambda/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "x-project":
+          "cmVhY3R0YXNrOmQ5aGVkeWN5djZwN3p3OHhpMzR0OWJtdHNqc2lneTV0Nw==",
+      },
+      body: JSON.stringify({
+        email: "adminreacttask@manaknight.com",
+        password: "a123456",
+        role: "admin",
+      }),
+    })
+      .then((response) => response.json())
+      .then((response) => navigate("/admin/dashboard"));
   };
 
   return (
